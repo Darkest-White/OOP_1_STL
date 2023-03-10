@@ -218,6 +218,25 @@ double insertList(list<int>& myList, const int N)
 	return diff.count();
 }
 
+double insertBackList(list<int>& myList)
+{
+	auto begin = chrono::high_resolution_clock::now();
+
+	list<int>::iterator it = myList.end();
+
+	for (int i = 0; i < 5000; i++)
+	{
+		myList.insert(it, 1);
+	}
+
+	auto end = chrono::high_resolution_clock::now();
+
+	chrono::duration<double> diff = end - begin;
+	//cout << "Time taken to INSERT BACK the list: " << diff.count() << "s" << endl;
+
+	return diff.count();
+}
+
 
 // RUNNING VECTOR
 
@@ -299,6 +318,7 @@ double runLearningInsertVector(const int N)
 
 	return sum_time /= n;
 }
+
 
 // RUNNING LIST
 
@@ -396,6 +416,23 @@ double runLearningInsertList(const int N)
 	return sum_time /= n;
 }
 
+double runLearningInsertBackList(const int N)
+{
+	double sum_time = 0;
+
+	int n = 10;
+	for (int i = 0; i < n; i++)
+	{
+		list<int> myList;
+
+		fillBackList(myList, N);
+		sum_time += insertBackList(myList);
+	}
+
+	return sum_time /= n;
+}
+
+
 int main()
 {
 	srand(1);
@@ -403,7 +440,7 @@ int main()
 	const int N = 1000000;
 
 
-	//// FILL
+	// FILL
 
 	double FV = runLearningFillVector(N);
 	cout << "Time for FILL the vector: " << FV << "\n\n";
@@ -414,15 +451,18 @@ int main()
 	double FL = runLearningFillBackList(N);
 	cout << "Time for FILL BACK the list: " << FL << "\n\n\n";
 
-	//// INSERT
+	// INSERT
 
 	double IV = runLearningInsertVector(N);
 	cout << "Time for INSERT the vector: " << IV << "\n\n";
 
 	double IL = runLearningInsertList(N);
-	cout << "Time for INSERT the list: " << IL << "\n\n\n";
+	cout << "Time for INSERT the list: " << IL << "\n\n";
 
-	//// REVERSE
+	double IBL = runLearningInsertBackList(N);
+	cout << "Time for INSERT BACK the list: " << IBL << "\n\n\n";
+
+	// REVERSE
 
 	double RV = runLearningReverseVector(N);
 	cout << "Time for REVERSE the vector: " << RV << "\n\n";
@@ -430,7 +470,7 @@ int main()
 	double RL = runLearningReverseList(N);
 	cout << "Time for REVERSE the list: " << RL << "\n\n\n";
 
-	//// DELETE
+	// DELETE
 
 	double DV = runLearningDeleteVector(N);
 	cout << "Time for Delete the vector: " << DV << "\n\n";
@@ -438,7 +478,7 @@ int main()
 	double DL = runLearningDeleteList(N);
 	cout << "Time for Delete the list: " << DL << "\n\n\n";
 
-	//// SORT
+	// SORT
 
 	double SV = runLearningSortVector(N);
 	cout << "Time for SORT the vector: " << SV << "\n\n";
